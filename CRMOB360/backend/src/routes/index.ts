@@ -5,7 +5,10 @@ import { FinanceController } from '@/controllers/FinanceController';
 import { AIController } from '@/controllers/AIController';
 import { ProcessController } from '@/controllers/ProcessController';
 import { AuthController } from '@/controllers/AuthController';
+import ClientPortalController from '@/controllers/ClientPortalController';
+import OwnerPortalController from '@/controllers/OwnerPortalController';
 import { authenticateToken, requirePermission } from '@/middleware/auth';
+import { clienteAuth, proprietarioAuth } from '@/middleware/portalAuth';
 
 const router = Router();
 
@@ -22,6 +25,83 @@ router.post('/auth/login', authController.login);
 router.post('/auth/refresh', authController.refreshToken);
 router.post('/auth/logout', authController.logout);
 
+// ============================================
+// PORTAL DO CLIENTE
+// ============================================
+// Rotas públicas do portal do cliente
+router.post('/portal-cliente/login', ClientPortalController.login);
+
+// Rotas protegidas do portal do cliente
+router.post('/portal-cliente/logout', clienteAuth, ClientPortalController.logout);
+router.get('/portal-cliente/dashboard', clienteAuth, ClientPortalController.getDashboard);
+
+// Imóveis
+router.get('/portal-cliente/imoveis', clienteAuth, ClientPortalController.listarImoveis);
+router.get('/portal-cliente/imoveis/:id', clienteAuth, ClientPortalController.getImovelDetalhes);
+
+// Favoritos
+router.get('/portal-cliente/favoritos', clienteAuth, ClientPortalController.listarFavoritos);
+router.post('/portal-cliente/favoritos/:imovelId', clienteAuth, ClientPortalController.adicionarFavorito);
+router.delete('/portal-cliente/favoritos/:imovelId', clienteAuth, ClientPortalController.removerFavorito);
+
+// Visitas
+router.get('/portal-cliente/visitas', clienteAuth, ClientPortalController.listarVisitas);
+router.post('/portal-cliente/visitas', clienteAuth, ClientPortalController.agendarVisita);
+router.delete('/portal-cliente/visitas/:id', clienteAuth, ClientPortalController.cancelarVisita);
+
+// Propostas
+router.get('/portal-cliente/propostas', clienteAuth, ClientPortalController.listarPropostas);
+router.post('/portal-cliente/propostas', clienteAuth, ClientPortalController.enviarProposta);
+
+// Notificações
+router.get('/portal-cliente/notificacoes', clienteAuth, ClientPortalController.listarNotificacoes);
+router.put('/portal-cliente/notificacoes/:id/ler', clienteAuth, ClientPortalController.marcarNotificacaoLida);
+
+// Documentos
+router.get('/portal-cliente/documentos', clienteAuth, ClientPortalController.listarDocumentos);
+router.put('/portal-cliente/documentos/:id/visualizar', clienteAuth, ClientPortalController.marcarDocumentoVisualizado);
+
+// Perfil
+router.put('/portal-cliente/perfil-busca', clienteAuth, ClientPortalController.atualizarPerfilBusca);
+
+// ============================================
+// PORTAL DO PROPRIETÁRIO
+// ============================================
+// Rotas públicas do portal do proprietário
+router.post('/portal-proprietario/login', OwnerPortalController.login);
+
+// Rotas protegidas do portal do proprietário
+router.post('/portal-proprietario/logout', proprietarioAuth, OwnerPortalController.logout);
+router.get('/portal-proprietario/dashboard', proprietarioAuth, OwnerPortalController.getDashboard);
+
+// Imóveis
+router.get('/portal-proprietario/imoveis', proprietarioAuth, OwnerPortalController.listarImoveis);
+router.get('/portal-proprietario/imoveis/:id', proprietarioAuth, OwnerPortalController.getImovelDetalhes);
+
+// Propostas
+router.get('/portal-proprietario/propostas', proprietarioAuth, OwnerPortalController.listarPropostas);
+router.get('/portal-proprietario/propostas/:id', proprietarioAuth, OwnerPortalController.getPropostaDetalhes);
+
+// Visitas
+router.get('/portal-proprietario/visitas', proprietarioAuth, OwnerPortalController.listarVisitas);
+
+// Financeiro
+router.get('/portal-proprietario/financeiro', proprietarioAuth, OwnerPortalController.getRelatorioFinanceiro);
+
+// Contratos
+router.get('/portal-proprietario/contratos', proprietarioAuth, OwnerPortalController.listarContratos);
+router.get('/portal-proprietario/contratos/:id', proprietarioAuth, OwnerPortalController.getContratoDetalhes);
+
+// Documentos
+router.get('/portal-proprietario/documentos', proprietarioAuth, OwnerPortalController.listarDocumentos);
+
+// Notificações
+router.get('/portal-proprietario/notificacoes', proprietarioAuth, OwnerPortalController.listarNotificacoes);
+router.put('/portal-proprietario/notificacoes/:id/ler', proprietarioAuth, OwnerPortalController.marcarNotificacaoLida);
+
+// ============================================
+// ROTAS DO SISTEMA PRINCIPAL (IMOBILIÁRIA)
+// ============================================
 // Rotas protegidas
 router.use(authenticateToken);
 

@@ -33,7 +33,14 @@ model usuarios {
   imoveis_responsavel       imoveis[]       @relation("ImovelResponsavel")
   imoveis_criado_por        imoveis[]       @relation("ImovelCriadoPor")
   usuario_perfis            usuario_perfil[]
-  
+  imovel_chaves             imovel_chaves[]
+  imovel_documentos         imovel_documentos[]
+  pipeline_leads            pipeline_leads[]
+  processos                 processos[]
+  tarefas_processo          tarefas_processo[]
+  agendamentos_visita       agendamentos_visita[]
+  documentos_compartilhados documentos_compartilhados[]
+
   @@map("usuarios")
 }
 
@@ -80,17 +87,23 @@ model clientes {
   custom_fields   Json      @default("{}")
 
   // Relacionamentos
-  responsavel       usuarios?             @relation("Responsavel", fields: [responsavel_id], references: [id])
-  criador           usuarios?             @relation("CriadoPor", fields: [criado_por], references: [id])
-  atividades        atividades[]
-  pipeline_leads    pipeline_leads[]
-  imoveis_proprietario imoveis[]          @relation("Proprietario")
-  contratos_locatario  contratos_locacao[] @relation("Locatario")
-  contratos_fiador     contratos_locacao[] @relation("Fiador")
-  propostas_cliente    propostas[]        @relation("PropostaCliente")
-  contas_financeiras  contas_financeiras[]
-  solicitacoes_lgpd   solicitacoes_lgpd[]
-  
+  responsavel           usuarios?                     @relation("Responsavel", fields: [responsavel_id], references: [id])
+  criador               usuarios?                     @relation("CriadoPor", fields: [criado_por], references: [id])
+  atividades            atividades[]
+  pipeline_leads        pipeline_leads[]
+  imoveis_proprietario  imoveis[]                     @relation("Proprietario")
+  contratos_locatario   contratos_locacao[]           @relation("Locatario")
+  contratos_fiador      contratos_locacao[]           @relation("Fiador")
+  propostas_cliente     propostas[]                   @relation("PropostaCliente")
+  contas_financeiras    contas_financeiras[]
+  solicitacoes_lgpd     solicitacoes_lgpd[]
+  portal_sessions       portal_sessions[]
+  imoveis_favoritos     imoveis_favoritos[]
+  agendamentos_visita   agendamentos_visita[]
+  notificacoes_portal   notificacoes_portal[]
+  portal_activities     portal_activities[]
+  documentos_compartilhados documentos_compartilhados[]
+
   @@map("clientes")
 }
 
@@ -186,15 +199,18 @@ model imoveis {
   custom_fields        Json      @default("{}")
 
   // Relacionamentos
-  proprietario      clientes?              @relation("Proprietario", fields: [proprietario_id], references: [id])
-  responsavel       usuarios?              @relation("ImovelResponsavel", fields: [responsavel_id], references: [id])
-  criador           usuarios?              @relation("ImovelCriadoPor", fields: [criado_por], references: [id])
-  chaves            imovel_chaves[]
-  documentos        imovel_documentos[]
-  contratos         contratos_locacao[]
-  propostas         propostas[]
-  contas_financeiras contas_financeiras[]
-  
+  proprietario          clientes?              @relation("Proprietario", fields: [proprietario_id], references: [id])
+  responsavel           usuarios?              @relation("ImovelResponsavel", fields: [responsavel_id], references: [id])
+  criador               usuarios?              @relation("ImovelCriadoPor", fields: [criado_por], references: [id])
+  chaves                imovel_chaves[]
+  documentos            imovel_documentos[]
+  contratos             contratos_locacao[]
+  propostas             propostas[]
+  contas_financeiras    contas_financeiras[]
+  imoveis_favoritos     imoveis_favoritos[]
+  agendamentos_visita   agendamentos_visita[]
+  documentos_compartilhados documentos_compartilhados[]
+
   @@map("imoveis")
 }
 
@@ -481,6 +497,139 @@ model configuracoes {
   categoria   String?  @db.VarChar(50)
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now()) @updatedAt
-  
+
   @@map("configuracoes")
+}
+
+// ============================================
+// MODELOS PARA PORTAIS (CLIENTE E PROPRIETÁRIO)
+// ============================================
+
+model portal_sessions {
+  id              String    @id @default(dbgenerated("gen_random_uuid()"))
+  cliente_id      String
+  tipo_portal     String    @db.VarChar(20) // 'cliente' ou 'proprietario'
+  token_acesso    String    @unique @db.VarChar(500)
+  refresh_token   String?   @db.VarChar(500)
+  ip_address      String?   @db.VarChar(45)
+  user_agent      String?
+  ultimo_acesso   DateTime  @default(now())
+  expira_em       DateTime
+  ativo           Boolean   @default(true)
+  created_at      DateTime  @default(now())
+
+  cliente clientes @relation(fields: [cliente_id], references: [id], onDelete: Cascade)
+
+  @@index([cliente_id, tipo_portal])
+  @@index([token_acesso])
+  @@map("portal_sessions")
+}
+
+model imoveis_favoritos {
+  id         String   @id @default(dbgenerated("gen_random_uuid()"))
+  cliente_id String
+  imovel_id  String
+  created_at DateTime @default(now())
+
+  cliente clientes @relation(fields: [cliente_id], references: [id], onDelete: Cascade)
+  imovel  imoveis  @relation(fields: [imovel_id], references: [id], onDelete: Cascade)
+
+  @@unique([cliente_id, imovel_id])
+  @@index([cliente_id])
+  @@index([imovel_id])
+  @@map("imoveis_favoritos")
+}
+
+model agendamentos_visita {
+  id                  String    @id @default(dbgenerated("gen_random_uuid()"))
+  imovel_id           String
+  cliente_id          String
+  corretor_id         String?
+  data_hora           DateTime
+  duracao_minutos     Int       @default(60)
+  status              String    @default("agendado") @db.VarChar(50) // agendado, confirmado, realizado, cancelado
+  tipo_visita         String    @default("presencial") @db.VarChar(50) // presencial, online
+  observacoes         String?
+  avaliacao_cliente   Int?      // 1-5 estrelas
+  comentario_cliente  String?
+  cancelado_por       String?   @db.VarChar(50)
+  motivo_cancelamento String?
+  created_at          DateTime  @default(now())
+  updated_at          DateTime  @default(now()) @updatedAt
+
+  imovel   imoveis  @relation(fields: [imovel_id], references: [id], onDelete: Cascade)
+  cliente  clientes @relation(fields: [cliente_id], references: [id], onDelete: Cascade)
+  corretor usuarios? @relation(fields: [corretor_id], references: [id])
+
+  @@index([cliente_id])
+  @@index([imovel_id])
+  @@index([data_hora])
+  @@index([status])
+  @@map("agendamentos_visita")
+}
+
+model notificacoes_portal {
+  id         String    @id @default(dbgenerated("gen_random_uuid()"))
+  cliente_id String
+  tipo       String    @db.VarChar(50) // proposta_atualizada, visita_confirmada, novo_imovel, mensagem
+  titulo     String    @db.VarChar(255)
+  mensagem   String
+  link       String?   @db.VarChar(500)
+  lida       Boolean   @default(false)
+  lida_em    DateTime?
+  created_at DateTime  @default(now())
+
+  cliente clientes @relation(fields: [cliente_id], references: [id], onDelete: Cascade)
+
+  @@index([cliente_id, lida])
+  @@index([created_at])
+  @@map("notificacoes_portal")
+}
+
+model portal_activities {
+  id          String   @id @default(dbgenerated("gen_random_uuid()"))
+  cliente_id  String
+  tipo_portal String   @db.VarChar(20) // 'cliente' ou 'proprietario'
+  acao        String   @db.VarChar(100) // login, visualizou_imovel, enviou_proposta, etc
+  entidade    String?  @db.VarChar(50) // tipo da entidade (imovel, proposta, documento)
+  entidade_id String?  // ID da entidade relacionada
+  detalhes    Json     @default("{}")
+  ip_address  String?  @db.VarChar(45)
+  user_agent  String?
+  created_at  DateTime @default(now())
+
+  cliente clientes @relation(fields: [cliente_id], references: [id], onDelete: Cascade)
+
+  @@index([cliente_id, tipo_portal])
+  @@index([created_at])
+  @@index([acao])
+  @@map("portal_activities")
+}
+
+model documentos_compartilhados {
+  id                  String    @id @default(dbgenerated("gen_random_uuid()"))
+  cliente_id          String
+  imovel_id           String?
+  contrato_id         String?
+  tipo_documento      String    @db.VarChar(100)
+  titulo              String    @db.VarChar(255)
+  arquivo_url         String
+  nome_arquivo        String    @db.VarChar(255)
+  tamanho_bytes       BigInt?
+  mime_type           String?   @db.VarChar(100)
+  requer_assinatura   Boolean   @default(false)
+  assinado            Boolean   @default(false)
+  data_assinatura     DateTime?
+  visualizado         Boolean   @default(false)
+  visualizado_em      DateTime?
+  compartilhado_por   String?
+  created_at          DateTime  @default(now())
+
+  cliente     clientes  @relation(fields: [cliente_id], references: [id], onDelete: Cascade)
+  imovel      imoveis?  @relation(fields: [imovel_id], references: [id], onDelete: Cascade)
+  compartilhou usuarios? @relation(fields: [compartilhado_por], references: [id])
+
+  @@index([cliente_id])
+  @@index([imovel_id])
+  @@map("documentos_compartilhados")
 }
