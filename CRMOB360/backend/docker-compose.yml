@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # Banco de Dados PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: imobiliaria360_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: imobiliaria360
+      POSTGRES_USER: imobiliaria
+      POSTGRES_PASSWORD: imobiliaria123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - imobiliaria360_network
+
+  # Redis para cache e sessões
+  redis:
+    image: redis:7-alpine
+    container_name: imobiliaria360_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --requirepass redis123
+    networks:
+      - imobiliaria360_network
+
+  # Backend Node.js
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: imobiliaria360_backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://imobiliaria:imobiliaria123@postgres:5432/imobiliaria360
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis123
+      JWT_SECRET: sua_chave_secreta_super_segura_aqui
+      JWT_REFRESH_SECRET: sua_chave_refresh_super_segura_aqui
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - imobiliaria360_network
+
+  # Frontend (quando implementado)
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: imobiliaria360_frontend
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+    environment:
+      REACT_APP_API_URL: http://localhost:3000/api/v1
+    depends_on:
+      - backend
+    networks:
+      - imobiliaria360_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  imobiliaria360_network:
+    driver: bridge
