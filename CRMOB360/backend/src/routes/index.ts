@@ -7,6 +7,9 @@ import { ProcessController } from '@/controllers/ProcessController';
 import { AuthController } from '@/controllers/AuthController';
 import ClientPortalController from '@/controllers/ClientPortalController';
 import OwnerPortalController from '@/controllers/OwnerPortalController';
+import MarketingController from '@/controllers/MarketingController';
+import WhatsAppController from '@/controllers/WhatsAppController';
+import PaymentController from '@/controllers/PaymentController';
 import { authenticateToken, requirePermission } from '@/middleware/auth';
 import { clienteAuth, proprietarioAuth } from '@/middleware/portalAuth';
 
@@ -236,23 +239,50 @@ router.get('/lgpd/consentimento/:cliente_id', requirePermission('admin'), async 
   }
 });
 
-// Webhooks
-router.post('/webhooks/whatsapp', async (req, res, next) => {
-  try {
-    // Implementar webhook WhatsApp
-    res.json({ message: 'Webhook processado' });
-  } catch (error) {
-    next(error);
-  }
+// ============================================
+// MÓDULO DE MARKETING
+// ============================================
+router.get('/marketing/campanhas', MarketingController.listarCampanhas);
+router.post('/marketing/campanhas', MarketingController.criarCampanha);
+router.post('/marketing/campanhas/:id/enviar', MarketingController.enviarCampanha);
+router.get('/marketing/campanhas/:id/estatisticas', MarketingController.getEstatisticas);
+
+router.get('/marketing/templates', MarketingController.listarTemplates);
+router.post('/marketing/templates', MarketingController.criarTemplate);
+
+// ============================================
+// MÓDULO WHATSAPP
+// ============================================
+router.post('/whatsapp/enviar-texto', WhatsAppController.enviarTexto);
+router.post('/whatsapp/enviar-template', WhatsAppController.enviarTemplate);
+router.post('/whatsapp/enviar-imagem', WhatsAppController.enviarImagem);
+router.post('/whatsapp/enviar-documento', WhatsAppController.enviarDocumento);
+router.get('/whatsapp/mensagens/:telefone', WhatsAppController.listarMensagens);
+router.get('/whatsapp/estatisticas', WhatsAppController.getEstatisticas);
+
+// ============================================
+// MÓDULO DE PAGAMENTOS
+// ============================================
+router.post('/pagamentos/boleto', PaymentController.gerarBoleto);
+router.post('/pagamentos/pix', PaymentController.gerarPix);
+router.post('/pagamentos/cartao', PaymentController.gerarCartao);
+router.get('/pagamentos/:paymentId', PaymentController.consultarPagamento);
+router.delete('/pagamentos/:paymentId', PaymentController.cancelarPagamento);
+router.get('/pagamentos', PaymentController.listarPagamentos);
+router.get('/pagamentos/estatisticas', PaymentController.getEstatisticas);
+router.post('/pagamentos/cliente-asaas', PaymentController.criarClienteAsaas);
+
+// ============================================
+// WEBHOOKS (Rotas públicas)
+// ============================================
+// Remover autenticação temporariamente para webhooks
+router.use('/webhooks', (req, res, next) => {
+  // Bypass authentication for webhooks
+  next();
 });
 
-router.post('/webhooks/pagamento', async (req, res, next) => {
-  try {
-    // Implementar webhook pagamento
-    res.json({ message: 'Webhook processado' });
-  } catch (error) {
-    next(error);
-  }
-});
+router.post('/webhooks/whatsapp', WhatsAppController.processarWebhook);
+router.get('/webhooks/whatsapp', WhatsAppController.processarWebhook); // Meta verification
+router.post('/webhooks/pagamento', PaymentController.processarWebhook);
 
 export default router;

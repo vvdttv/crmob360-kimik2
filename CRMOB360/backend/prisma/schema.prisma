@@ -633,3 +633,327 @@ model documentos_compartilhados {
   @@index([imovel_id])
   @@map("documentos_compartilhados")
 }
+
+// ============================================
+// MÓDULO DE MARKETING
+// ============================================
+
+model campanhas_marketing {
+  id              String    @id @default(dbgenerated("gen_random_uuid()"))
+  codigo          String    @unique @db.VarChar(50)
+  nome            String    @db.VarChar(255)
+  tipo            String    @db.VarChar(20) // email, sms, whatsapp
+  assunto         String?   @db.VarChar(500)
+  mensagem        String
+  segmentacao     Json      @default("{}")
+  status          String    @default("rascunho") @db.VarChar(50) // rascunho, agendada, enviando, enviada, cancelada
+  agendamento     DateTime?
+  data_envio      DateTime?
+  template_id     String?
+  total_envios    Int       @default(0)
+  total_enviados  Int       @default(0)
+  total_erros     Int       @default(0)
+  criado_por      String?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @default(now()) @updatedAt
+
+  envios_campanha envios_campanha[]
+
+  @@index([status])
+  @@index([tipo])
+  @@map("campanhas_marketing")
+}
+
+model templates_mensagem {
+  id         String   @id @default(dbgenerated("gen_random_uuid()"))
+  nome       String   @db.VarChar(255)
+  tipo       String   @db.VarChar(20) // email, sms, whatsapp
+  assunto    String?  @db.VarChar(500)
+  conteudo   String
+  variaveis  Json     @default("[]")
+  ativo      Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@index([tipo])
+  @@map("templates_mensagem")
+}
+
+model envios_campanha {
+  id            String    @id @default(dbgenerated("gen_random_uuid()"))
+  campanha_id   String
+  cliente_id    String
+  status        String    @default("pendente") @db.VarChar(50) // pendente, enviado, erro
+  erro          String?
+  aberto        Boolean   @default(false)
+  data_abertura DateTime?
+  clicado       Boolean   @default(false)
+  data_clique   DateTime?
+  created_at    DateTime  @default(now())
+
+  campanha campanhas_marketing @relation(fields: [campanha_id], references: [id], onDelete: Cascade)
+  cliques  cliques_campanha[]
+
+  @@index([campanha_id])
+  @@index([cliente_id])
+  @@index([status])
+  @@map("envios_campanha")
+}
+
+model cliques_campanha {
+  id        String   @id @default(dbgenerated("gen_random_uuid()"))
+  envio_id  String
+  link      String
+  created_at DateTime @default(now())
+
+  envio envios_campanha @relation(fields: [envio_id], references: [id], onDelete: Cascade)
+
+  @@index([envio_id])
+  @@map("cliques_campanha")
+}
+
+// ============================================
+// WHATSAPP
+// ============================================
+
+model mensagens_whatsapp {
+  id         String   @id @default(dbgenerated("gen_random_uuid()"))
+  message_id String?  @db.VarChar(255)
+  telefone   String   @db.VarChar(20)
+  tipo       String   @db.VarChar(50) // text, template, image, document, audio, video
+  conteudo   String
+  status     String   @default("pendente") @db.VarChar(50) // pendente, enviada, entregue, lida, recebida, erro, failed
+  erro       String?
+  direcao    String   @default("saida") @db.VarChar(20) // saida, entrada
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  @@index([telefone])
+  @@index([status])
+  @@index([message_id])
+  @@map("mensagens_whatsapp")
+}
+
+// ============================================
+// PAGAMENTOS
+// ============================================
+
+model transacoes_pagamento {
+  id                 String   @id @default(dbgenerated("gen_random_uuid()"))
+  conta_id           String?
+  gateway            String   @db.VarChar(50) // asaas, pagseguro, mercadopago
+  gateway_payment_id String?  @db.VarChar(255)
+  valor              Decimal  @db.Decimal(15, 2)
+  status             String   @default("pending") @db.VarChar(50) // pending, confirmed, received, overdue, refunded, cancelled
+  tipo               String?  @db.VarChar(50) // boleto, pix, credit_card, debit_card
+  metadados          Json     @default("{}")
+  created_at         DateTime @default(now())
+  updated_at         DateTime @default(now()) @updatedAt
+
+  @@index([conta_id])
+  @@index([gateway_payment_id])
+  @@index([status])
+  @@map("transacoes_pagamento")
+}
+
+// ============================================
+// PUBLICAÇÃO EM PORTAIS
+// ============================================
+
+model portal_integracoes {
+  id             String   @id @default(dbgenerated("gen_random_uuid()"))
+  nome           String   @unique @db.VarChar(100) // vivareal, zapimoveis, olx
+  ativo          Boolean  @default(true)
+  credenciais    Json // api_key, secret, etc (criptografado)
+  configuracoes  Json     @default("{}")
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now()) @updatedAt
+
+  publicacoes publicacoes_portal[]
+
+  @@map("portal_integracoes")
+}
+
+model publicacoes_portal {
+  id                    String    @id @default(dbgenerated("gen_random_uuid()"))
+  imovel_id             String
+  portal_id             String
+  portal_listing_id     String?   @db.VarChar(255) // ID do anúncio no portal
+  status                String    @default("publicado") @db.VarChar(50) // publicado, pausado, removido, erro
+  data_publicacao       DateTime?
+  data_remocao          DateTime?
+  erro                  String?
+  visualizacoes         Int       @default(0)
+  leads_gerados         Int       @default(0)
+  ultima_sincronizacao  DateTime?
+  created_at            DateTime  @default(now())
+  updated_at            DateTime  @default(now()) @updatedAt
+
+  portal portal_integracoes @relation(fields: [portal_id], references: [id], onDelete: Cascade)
+  leads  leads_portais[]
+
+  @@unique([imovel_id, portal_id])
+  @@index([imovel_id])
+  @@index([portal_id])
+  @@index([status])
+  @@map("publicacoes_portal")
+}
+
+model leads_portais {
+  id             String    @id @default(dbgenerated("gen_random_uuid()"))
+  publicacao_id  String
+  nome           String    @db.VarChar(255)
+  email          String?   @db.VarChar(255)
+  telefone       String?   @db.VarChar(20)
+  mensagem       String?
+  origem         String    @db.VarChar(100) // vivareal, zapimoveis, etc
+  cliente_id     String? // Se já foi convertido em cliente
+  created_at     DateTime  @default(now())
+
+  publicacao publicacoes_portal @relation(fields: [publicacao_id], references: [id], onDelete: Cascade)
+
+  @@index([publicacao_id])
+  @@index([cliente_id])
+  @@map("leads_portais")
+}
+
+// ============================================
+// AUDITORIA
+// ============================================
+
+model logs_auditoria {
+  id               String   @id @default(dbgenerated("gen_random_uuid()"))
+  usuario_id       String?
+  acao             String   @db.VarChar(100) // create, update, delete, login, logout, etc
+  entidade         String?  @db.VarChar(100) // clientes, imoveis, contas_financeiras, etc
+  entidade_id      String?
+  dados_anteriores Json?
+  dados_novos      Json?
+  ip_address       String?  @db.VarChar(45)
+  user_agent       String?
+  created_at       DateTime @default(now())
+
+  @@index([usuario_id])
+  @@index([acao])
+  @@index([entidade, entidade_id])
+  @@index([created_at])
+  @@map("logs_auditoria")
+}
+
+// ============================================
+// NOTIFICAÇÕES AVANÇADAS
+// ============================================
+
+model notificacoes_sistema {
+  id             String    @id @default(dbgenerated("gen_random_uuid()"))
+  usuario_id     String
+  tipo           String    @db.VarChar(50) // info, warning, error, success
+  categoria      String?   @db.VarChar(50) // tarefa, processo, financeiro, lead, etc
+  titulo         String    @db.VarChar(255)
+  mensagem       String
+  link           String?   @db.VarChar(500)
+  lida           Boolean   @default(false)
+  lida_em        DateTime?
+  acao_principal Json? // {label: 'Ver', url: '/...'}
+  created_at     DateTime  @default(now())
+
+  @@index([usuario_id, lida])
+  @@index([created_at])
+  @@map("notificacoes_sistema")
+}
+
+// ============================================
+// DASHBOARDS E ANALYTICS
+// ============================================
+
+model metricas_sistema {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()"))
+  data                DateTime @unique @db.Date
+  total_clientes      Int      @default(0)
+  total_leads         Int      @default(0)
+  total_imoveis       Int      @default(0)
+  imoveis_disponiveis Int      @default(0)
+  total_visitas       Int      @default(0)
+  total_propostas     Int      @default(0)
+  receita_dia         Decimal  @default(0) @db.Decimal(15, 2)
+  despesa_dia         Decimal  @default(0) @db.Decimal(15, 2)
+  metricas_extras     Json     @default("{}")
+  created_at          DateTime @default(now())
+
+  @@map("metricas_sistema")
+}
+
+// ============================================
+// CONFIGURAÇÕES AVANÇADAS
+// ============================================
+
+model config_integracoes {
+  id            String   @id @default(dbgenerated("gen_random_uuid()"))
+  tipo          String   @db.VarChar(50) // email, whatsapp, payment, portal
+  nome          String   @db.VarChar(100)
+  ativo         Boolean  @default(false)
+  credenciais   Json
+  configuracoes Json     @default("{}")
+  created_at    DateTime @default(now())
+  updated_at    DateTime @default(now()) @updatedAt
+
+  @@index([tipo])
+  @@map("config_integracoes")
+}
+
+// ============================================
+// WEBHOOKS
+// ============================================
+
+model webhooks_recebidos {
+  id            String    @id @default(dbgenerated("gen_random_uuid()"))
+  origem        String    @db.VarChar(100) // whatsapp, asaas, vivareal, etc
+  evento        String    @db.VarChar(100)
+  payload       Json
+  processado    Boolean   @default(false)
+  processado_em DateTime?
+  erro          String?
+  created_at    DateTime  @default(now())
+
+  @@index([origem])
+  @@index([processado])
+  @@map("webhooks_recebidos")
+}
+
+// ============================================
+// AUTOMAÇÕES
+// ============================================
+
+model regras_automacao {
+  id                 String   @id @default(dbgenerated("gen_random_uuid()"))
+  nome               String   @db.VarChar(255)
+  descricao          String?
+  trigger_tipo       String   @db.VarChar(100) // novo_lead, visita_agendada, proposta_recebida, etc
+  trigger_condicoes  Json     @default("{}")
+  acoes              Json // [{tipo: 'enviar_email', config: {...}}, ...]
+  ativo              Boolean  @default(true)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @default(now()) @updatedAt
+
+  execucoes execucoes_automacao[]
+
+  @@index([trigger_tipo])
+  @@map("regras_automacao")
+}
+
+model execucoes_automacao {
+  id            String    @id @default(dbgenerated("gen_random_uuid()"))
+  regra_id      String
+  entidade_tipo String?   @db.VarChar(100)
+  entidade_id   String?
+  status        String    @default("executando") @db.VarChar(50) // executando, concluida, erro
+  resultado     Json?
+  erro          String?
+  created_at    DateTime  @default(now())
+  concluida_em  DateTime?
+
+  regra regras_automacao @relation(fields: [regra_id], references: [id], onDelete: Cascade)
+
+  @@index([regra_id])
+  @@map("execucoes_automacao")
+}
