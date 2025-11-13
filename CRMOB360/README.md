@@ -1,8 +1,19 @@
-# Plataforma de Gestão Imobiliária 360
+# 9MOB - Plataforma de Gestão Imobiliária 360°
 
-## Visão Geral
+> **9MOB**: Nine + Mob = Imob | 3+6+0 = 9 | Gestão 360° completa
 
-A Plataforma de Gestão Imobiliária 360 é uma solução SaaS completa e integrada para gestão imobiliária, desenvolvida com arquitetura moderna e tecnologias de ponta. O sistema atende a todas as necessidades de uma imobiliária, desde a gestão de clientes e imóveis até análises preditivas com inteligência artificial.
+## 🚀 Visão Geral
+
+**9MOB** é uma solução SaaS completa e integrada para gestão imobiliária, desenvolvida com arquitetura moderna e tecnologias de ponta. O sistema atende a todas as necessidades de uma imobiliária, desde a gestão de clientes e imóveis até análises preditivas com inteligência artificial.
+
+### Por que 9MOB?
+
+- **9** = 3 + 6 + 0 (soma dos dígitos de 360)
+- **360°** = Visão completa e integrada de todo o negócio
+- **MOB** = Imobiliária (Nine + Mob = NineMob = Imob)
+- **Gestão 360°** = Cobertura completa de todos os processos imobiliários
+
+---
 
 ## 🏗️ Arquitetura do Sistema
 
@@ -33,85 +44,113 @@ A Plataforma de Gestão Imobiliária 360 é uma solução SaaS completa e integr
 - Microserviços com comunicação via Kafka
 - Arquitetura event-driven
 
+---
+
 ## 📋 Módulos Implementados
 
-### 1. Módulo CRM (Customer Relationship Management)
+### 1. 🎯 Módulo CRM (Customer Relationship Management)
 - **Gestão de Clientes**: Cadastro completo, segmentação e histórico
 - **Lead Scoring**: Qualificação automática com IA
 - **Pipeline de Vendas**: Acompanhamento de oportunidades
 - **Automação de Comunicação**: Emails, SMS e WhatsApp
+- **Funis de Venda**: Gestão customizável de etapas
+- **Atividades**: Registro completo de interações
 
-### 2. Módulo de Imóveis
+### 2. 🏠 Módulo de Imóveis
 - **Cadastro Completo**: Ficha técnica detalhada
 - **Gestão de Documentos**: Contratos, laudos e certidões
 - **Fotos e Vídeos**: Galeria multimídia
-- **Integração com Portais**: Publicação automática
+- **Integração com Portais**: Publicação automática (Viva Real, Zap Imóveis)
+- **Gestão de Chaves**: Controle de empréstimo e devolução
+- **Rastreamento de Visualizações**: Analytics de interesse
 
-### 3. Módulo Financeiro
+### 3. 💰 Módulo Financeiro
 - **Contas a Pagar/Receber**: Gestão completa de fluxo de caixa
-- **Comissões**: Cálculo automático e distribuição
+- **Comissões**: Cálculo automático e distribuição multi-parte
 - **DRE**: Demonstração de resultados integrada
 - **Conciliação Bancária**: Integração com bancos
+- **Plano de Contas**: Estrutura hierárquica
+- **Centros de Custo**: Controle departamental
+- **Relatórios de Inadimplência**: Monitoramento de atrasos
 
-### 4. Módulo de Processos
+### 4. ⚙️ Módulo de Processos
 - **Templates de Processos**: Padronização de fluxos
 - **Automação de Tarefas**: Workflows personalizáveis
 - **Acompanhamento em Tempo Real**: Dashboard de processos
-- **Gestão de Tarefas**: Atribuição e prazos
+- **Gestão de Tarefas**: Atribuição, prazos e prioridades
+- **Gatilhos Automáticos**: Execução baseada em eventos
 
-### 5. Módulo Marketing
+### 5. 📢 Módulo Marketing
 - **Campanhas Multicanal**: Email, SMS, WhatsApp
 - **Automação de Marketing**: Jornadas do cliente
 - **Segmentação Avançada**: Baseada em comportamento
 - **Análise de ROI**: Mensuração de resultados
+- **Templates de Mensagens**: Comunicação padronizada
 
-### 6. Módulo Relatórios e BI
+### 6. 📊 Módulo Relatórios e BI
 - **Performance Geral**: KPIs da imobiliária
-- **Relatórios de Vendas**: Análise detalhada
+- **Relatórios de Vendas**: Análise detalhada por corretor/região
 - **Gestão de Estoque**: Imóveis disponíveis
 - **Dashboards Interativos**: Visualização em tempo real
+- **Exportação**: PDF, Excel, CSV
 
-### 7. Módulo de IA (Inteligência Artificial)
-- **Lead Scoring**: Predição de conversão
+### 7. 🤖 Módulo de IA (Inteligência Artificial)
+- **Lead Scoring**: Predição de conversão com ML
 - **Matching Inteligente**: Cliente x Imóvel
 - **Insights Preditivos**: Análises automáticas
 - **Recomendações**: Sugestões personalizadas
+- **Análise de Conversas**: NLP para extrair perfis
+- **Geração de Conteúdo**: Descrições automáticas de anúncios
+- **Precificação Inteligente**: Sugestão de preços baseada em dados
 
-### 8. Módulo de Configurações
-- **Gestão de Usuários**: Permissões e papéis
-- **Parâmetros do Sistema**: Configurações gerais
-- **Integrações**: APIs e conectores
-- **Personalização**: Temas e layouts
-
-### 9. Módulo de Comunicação
-- **Central de Comunicações**: Todas as interações
-- **Templates de Mensagens**: Padronização
-- **Agendamento de Comunicações**: Automação
-- **Histórico de Interações**: Registro completo
-
-### 10. Módulo Mobile
-- **App Nativo**: iOS e Android
-- **Funcionalidades Offline**: Sincronização
-- **Geolocalização**: Imóveis próximos
-- **Notificações Push**: Alertas em tempo real
-
-### 11. Módulo de Integrações
-- **Portais Imobiliários**: Viva Real, Zap Imóveis
-- **Sistemas Financeiros**: Integração bancária
-- **Ferramentas de Marketing**: Google Ads, Facebook
-- **ERP/CRM**: Integração com sistemas legados
-
-### 12. Módulo de LGPD
+### 8. 🔐 Módulo de LGPD
 - **Gestão de Consentimentos**: Registro e controle
 - **Direitos dos Titulares**: Acesso, correção, exclusão
 - **Segurança de Dados**: Criptografia e anonimização
 - **Auditoria e Compliance**: Relatórios de conformidade
+- **Templates de Termos**: Versionamento de documentos
 
-### 13. Módulo de Administrador
-- **Gestão de Tenant**: Multi-empresa
+### 9. 👥 Portal do Cliente (NOVO!)
+- **Autenticação Segura**: Login com JWT
+- **Dashboard Personalizado**: Visão completa das interações
+- **Busca de Imóveis**: Filtros avançados e recomendações
+- **Sistema de Favoritos**: Salvar imóveis de interesse
+- **Agendamento de Visitas**: Presencial ou online
+- **Envio de Propostas**: Acompanhamento de status
+- **Documentos**: Acesso a contratos e certidões
+- **Notificações**: Atualizações em tempo real
+
+### 10. 🏢 Portal do Proprietário (NOVO!)
+- **Dashboard Financeiro**: Receitas, despesas e rentabilidade
+- **Gestão de Imóveis**: Visualizar todos os imóveis cadastrados
+- **Propostas Recebidas**: Acompanhar ofertas
+- **Visitas Agendadas**: Monitorar interesse
+- **Relatórios Financeiros**: Contas a receber e comissões
+- **Contratos**: Visualizar locatários e termos
+- **Documentos**: Acesso a toda documentação
+- **Notificações**: Alertas de vencimentos e propostas
+
+### 11. ⚙️ Módulo de Configurações
+- **Gestão de Usuários**: Permissões e papéis (RBAC)
+- **Perfis de Acesso**: Admin, Corretor, Gerente, Financeiro
+- **Parâmetros do Sistema**: Configurações gerais
+- **Integrações**: APIs e conectores
+- **Personalização**: Temas e layouts
+
+### 12. 🔗 Módulo de Integrações
+- **Portais Imobiliários**: Viva Real, Zap Imóveis
+- **Sistemas Financeiros**: Integração bancária
+- **Ferramentas de Marketing**: Google Ads, Facebook
+- **WhatsApp API**: Comunicação direta
+- **Gateways de Pagamento**: Asaas e similares
+
+### 13. 👨‍💼 Módulo de Administrador
+- **Gestão de Tenant**: Multi-empresa (SaaS)
 - **Monitoramento**: Performance e logs
 - **Manutenção**: Rotinas administrativas
-- **Suporte**: Sistema de tickets
+- **Auditoria**: Rastreamento completo de ações
+
+---
 
 ## 🚀 Funcionalidades Avançadas
 
@@ -119,7 +158,7 @@ A Plataforma de Gestão Imobiliária 360 é uma solução SaaS completa e integr
 - **Machine Learning**: Modelos preditivos treinados
 - **NLP**: Processamento de linguagem natural
 - **Análise Preditiva**: Previsões de mercado
-- **Recomendações**: Sistema de sugestões
+- **Recomendações**: Sistema de sugestões contextuais
 
 ### Automação
 - **Workflows Personalizáveis**: Fluxos adaptáveis
@@ -133,11 +172,13 @@ A Plataforma de Gestão Imobiliária 360 é uma solução SaaS completa e integr
 - **KPIs em Tempo Real**: Métricas ao vivo
 - **Previsões**: Projeções baseadas em dados
 
+---
+
 ## 📊 Dashboards e Relatórios
 
 ### Dashboard Principal
 - KPIs em tempo real
-- Gráficos interativos
+- Gráficos interativos (Recharts)
 - Alertas e notificações
 - Acesso rápido a funcionalidades
 
@@ -146,12 +187,15 @@ A Plataforma de Gestão Imobiliária 360 é uma solução SaaS completa e integr
 - Performance por região
 - Análise de estoque
 - ROI de campanhas
+- DRE (Demonstração de Resultados)
 
 ### Exportação de Dados
 - PDF, Excel, CSV
 - Agendamento de envio
 - Templates personalizáveis
 - Integração com BI externo
+
+---
 
 ## 🔒 Segurança e Compliance
 
@@ -160,6 +204,7 @@ A Plataforma de Gestão Imobiliária 360 é uma solução SaaS completa e integr
 - HTTPS/TLS 1.3
 - Backup automático
 - Auditoria de acessos
+- Rate limiting
 
 ### LGPD/GDPR
 - Gestão de consentimentos
@@ -168,36 +213,42 @@ A Plataforma de Gestão Imobiliária 360 é uma solução SaaS completa e integr
 - Relatórios de conformidade
 
 ### Controle de Acesso
-- Autenticação multifator
-- Permissões granulares
+- Autenticação JWT com refresh tokens
+- Permissões granulares (RBAC)
 - Log de atividades
-- Sessões seguras
+- Sessões seguras com expiração
 
-## 🎯 Benefícios para a Imobiliária
+---
+
+## 🎯 Benefícios do 9MOB
 
 ### Eficiência Operacional
-- Redução de 70% no tempo de tarefas repetitivas
-- Automação de processos manuais
-- Integração de sistemas
-- Gestão unificada
+- ✅ Redução de 70% no tempo de tarefas repetitivas
+- ✅ Automação de processos manuais
+- ✅ Integração de sistemas
+- ✅ Gestão unificada 360°
 
 ### Aumento de Vendas
-- Lead scoring inteligente
-- Matching preciso
-- Follow-up automatizado
-- Análise preditiva
+- ✅ Lead scoring inteligente
+- ✅ Matching preciso cliente-imóvel
+- ✅ Follow-up automatizado
+- ✅ Análise preditiva de conversão
 
 ### Melhoria na Experiência do Cliente
-- Comunicação personalizada
-- Resposta rápida
-- Processo transparente
-- Acompanhamento em tempo real
+- ✅ Comunicação personalizada
+- ✅ Resposta rápida
+- ✅ Processo transparente
+- ✅ Portais self-service
+- ✅ Acompanhamento em tempo real
 
 ### Controle Financeiro
-- Gestão integrada
-- Previsão de receitas
-- Análise de rentabilidade
-- Redução de custos
+- ✅ Gestão integrada de receitas e despesas
+- ✅ Previsão de receitas
+- ✅ Análise de rentabilidade
+- ✅ Redução de custos operacionais
+- ✅ DRE automatizado
+
+---
 
 ## 🛠️ Instalação e Configuração
 
@@ -205,78 +256,130 @@ A Plataforma de Gestão Imobiliária 360 é uma solução SaaS completa e integr
 - Node.js 18+
 - PostgreSQL 14+
 - Redis 6+
-- Docker (opcional)
+- Docker (opcional mas recomendado)
 
-### Instalação
+### Instalação Rápida
+
 ```bash
 # Clone o repositório
-git clone https://github.com/imobiliaria360/platform.git
-cd platform
+git clone https://github.com/vvdttv/crmob360-kimik2.git
+cd crmob360-kimik2/CRMOB360
+
+# Configure variáveis de ambiente
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
 
 # Instale as dependências
-npm install
-
-# Configure as variáveis de ambiente
-cp .env.example .env
+cd backend && npm install
+cd ../frontend && npm install
 
 # Execute as migrações
+cd backend
 npx prisma migrate dev
+npx prisma generate
 
-# Inicie o servidor
+# Inicie o servidor (desenvolvimento)
 npm run dev
 ```
 
-### Docker
+### Docker (Recomendado)
+
 ```bash
 # Construir e executar com Docker
 docker-compose up -d
+
+# Verificar logs
+docker-compose logs -f
+
+# Parar containers
+docker-compose down
 ```
+
+### Serviços Docker
+
+- **PostgreSQL**: localhost:5432
+- **Redis**: localhost:6379
+- **Kafka**: localhost:9092
+- **Backend API**: localhost:3001
+- **Frontend**: localhost:3000
+- **Nginx**: localhost:80/443
+
+---
 
 ## 📚 Documentação
 
 ### Documentação Técnica
-- [API Reference](/docs/api.md)
-- [Database Schema](/docs/database.md)
-- [Architecture Guide](/docs/architecture.md)
-- [Deployment Guide](/docs/deployment.md)
+- [API Reference](api.md) - 50+ endpoints documentados
+- [Database Schema](database.md) - 25+ tabelas Prisma
+- [Architecture Guide](arquitetura.md) - Microserviços e event-driven
+- [Portal Documentation](PORTAIS.md) - Guia completo dos portais
 
-### Documentação de Usuário
-- [User Guide](/docs/user-guide.md)
-- [Video Tutorials](/docs/tutorials.md)
-- [FAQ](/docs/faq.md)
-- [Best Practices](/docs/best-practices.md)
+### Estrutura do Projeto
 
-## 🤝 Contribuindo
+```
+9MOB/
+├── backend/               # API Node.js + Express
+│   ├── src/
+│   │   ├── controllers/   # 8 controllers
+│   │   ├── services/      # 7 services
+│   │   ├── middleware/    # Auth, errors, logging
+│   │   ├── routes/        # 50+ rotas
+│   │   └── utils/         # Validators, helpers
+│   ├── prisma/
+│   │   └── schema.prisma  # 25 models
+│   └── package.json
+├── frontend/              # React + TypeScript
+│   ├── src/
+│   │   ├── pages/         # 20+ páginas
+│   │   ├── components/    # Componentes reutilizáveis
+│   │   ├── context/       # Auth context
+│   │   └── services/      # API client
+│   └── package.json
+├── nginx/                 # Reverse proxy
+├── docker-compose.yml     # Orquestração completa
+├── README.md             # Este arquivo
+├── PORTAIS.md            # Documentação dos portais
+└── api.md                # Documentação da API
+```
 
-### Como Contribuir
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
+---
 
-### Código de Conduta
-- Seja respeitoso e inclusivo
-- Ajude a comunidade
-- Compartilhe conhecimento
-- Reporte bugs e sugira melhorias
+## 🔄 Workflow de Desenvolvimento
 
-## 📄 Licença
+### Branch Strategy
+- `main` - Produção
+- `develop` - Desenvolvimento
+- `feature/*` - Novas funcionalidades
+- `bugfix/*` - Correções
 
-Este projeto está licenciado sob a MIT License - veja o arquivo [LICENSE](LICENSE) para detalhes.
+### Commits
+Seguimos [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: adicionar portal do cliente
+fix: corrigir cálculo de comissão
+docs: atualizar README
+refactor: reestruturar services
+test: adicionar testes unitários
+```
+
+---
 
 ## 📞 Suporte
 
 ### Canais de Suporte
-- **Email**: suporte@imobiliaria360.com
+- **Email**: suporte@9mob.com.br
 - **Telefone**: +55 11 9999-9999
 - **WhatsApp**: +55 11 9999-9999
-- **Help Desk**: https://suporte.imobiliaria360.com
+- **Help Desk**: https://suporte.9mob.com.br
+- **GitHub Issues**: https://github.com/vvdttv/crmob360-kimik2/issues
 
 ### Horário de Atendimento
 - Segunda a Sexta: 8h às 18h
 - Sábado: 8h às 12h
 - Plantão 24/7 para emergências
+
+---
 
 ## 🌟 Reconhecimentos
 
@@ -287,6 +390,20 @@ Este projeto está licenciado sob a MIT License - veja o arquivo [LICENSE](LICEN
 
 ---
 
-**Imobiliária 360** - Transformando o mercado imobiliário através da tecnologia e inovação.
+## 📄 Licença
 
-© 2024 Imobiliária 360. Todos os direitos reservados.
+Este projeto está licenciado sob a MIT License - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+---
+
+<div align="center">
+
+**9MOB** - Transformando o mercado imobiliário através da tecnologia e inovação.
+
+*Gestão 360° | Inteligência Artificial | Automação Total*
+
+© 2024 9MOB. Todos os direitos reservados.
+
+**Nine + Mob = Imob | 3+6+0 = 9 | Visão 360°**
+
+</div>
