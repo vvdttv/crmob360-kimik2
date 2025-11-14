@@ -2,6 +2,21 @@
 
 > **9MOB**: Nine + Mob = Imob | 3+6+0 = 9 | Gestão 360° completa
 
+---
+
+## 📚 **PRIMEIRO ACESSO? COMEÇE AQUI!**
+
+**👉 [Documentação para Iniciantes - CLIQUE AQUI](FAQs%20para%20iniciantes%20executarem/00-INICIO-RAPIDO.md)**
+
+Se você está executando o 9MOB pela primeira vez:
+- 📖 **[Guia de Início Rápido](FAQs%20para%20iniciantes%20executarem/00-INICIO-RAPIDO.md)** - Instalação passo a passo
+- ❓ **[FAQ - Perguntas Frequentes](FAQs%20para%20iniciantes%20executarem/FAQ-PERGUNTAS-FREQUENTES.md)** - 50+ perguntas respondidas
+- 📑 **[Índice da Documentação](FAQs%20para%20iniciantes%20executarem/INDICE-DOCUMENTACAO.md)** - Todos os guias disponíveis
+
+**Toda a documentação está organizada na pasta:** [`FAQs para iniciantes executarem/`](FAQs%20para%20iniciantes%20executarem/)
+
+---
+
 ## 🚀 Visão Geral
 
 **9MOB** é uma solução SaaS completa e integrada para gestão imobiliária, desenvolvida com arquitetura moderna e tecnologias de ponta. O sistema atende a todas as necessidades de uma imobiliária, desde a gestão de clientes e imóveis até análises preditivas com inteligência artificial.
@@ -308,38 +323,56 @@ docker-compose down
 
 ## 📚 Documentação
 
-### Documentação Técnica
-- [API Reference](api.md) - 50+ endpoints documentados
-- [Database Schema](database.md) - 25+ tabelas Prisma
-- [Architecture Guide](arquitetura.md) - Microserviços e event-driven
-- [Portal Documentation](PORTAIS.md) - Guia completo dos portais
+### 🎯 Para Iniciantes
+**👉 Toda documentação para iniciantes está na pasta:** [`FAQs para iniciantes executarem/`](FAQs%20para%20iniciantes%20executarem/)
+
+- **[Guia de Início Rápido](FAQs%20para%20iniciantes%20executarem/00-INICIO-RAPIDO.md)** - Comece aqui!
+- **[FAQ Completo](FAQs%20para%20iniciantes%20executarem/FAQ-PERGUNTAS-FREQUENTES.md)** - 50+ perguntas respondidas
+- **[Índice da Documentação](FAQs%20para%20iniciantes%20executarem/INDICE-DOCUMENTACAO.md)** - Navegue por todos os guias
+
+### 📖 Documentação Técnica Avançada
+- **[API Reference](FAQs%20para%20iniciantes%20executarem/api.md)** - 50+ endpoints documentados
+- **[Database Schema](FAQs%20para%20iniciantes%20executarem/database.md)** - 40+ tabelas Prisma
+- **[Architecture Guide](FAQs%20para%20iniciantes%20executarem/arquitetura.md)** - Microserviços e event-driven
+- **[Portal Documentation](FAQs%20para%20iniciantes%20executarem/PORTAIS.md)** - Guia completo dos portais
+- **[Funcionalidades Completas](FAQs%20para%20iniciantes%20executarem/FUNCIONALIDADES.md)** - 13 módulos, 90+ features
 
 ### Estrutura do Projeto
 
 ```
 9MOB/
-├── backend/               # API Node.js + Express
+├── backend/                            # API Node.js + Express
 │   ├── src/
-│   │   ├── controllers/   # 8 controllers
-│   │   ├── services/      # 7 services
-│   │   ├── middleware/    # Auth, errors, logging
-│   │   ├── routes/        # 50+ rotas
-│   │   └── utils/         # Validators, helpers
+│   │   ├── controllers/                # 11 controllers
+│   │   ├── services/                   # 13 services
+│   │   ├── middleware/                 # Auth, errors, logging
+│   │   ├── routes/                     # 70+ rotas
+│   │   └── utils/                      # Validators, helpers
 │   ├── prisma/
-│   │   └── schema.prisma  # 25 models
+│   │   ├── schema.prisma               # 40 models
+│   │   └── migrations/                 # SQL migrations
 │   └── package.json
-├── frontend/              # React + TypeScript
+├── frontend/                           # React + TypeScript
 │   ├── src/
-│   │   ├── pages/         # 20+ páginas
-│   │   ├── components/    # Componentes reutilizáveis
-│   │   ├── context/       # Auth context
-│   │   └── services/      # API client
+│   │   ├── pages/                      # 30+ páginas
+│   │   ├── components/                 # Componentes reutilizáveis
+│   │   ├── context/                    # Auth context
+│   │   └── services/                   # API client
 │   └── package.json
-├── nginx/                 # Reverse proxy
-├── docker-compose.yml     # Orquestração completa
-├── README.md             # Este arquivo
-├── PORTAIS.md            # Documentação dos portais
-└── api.md                # Documentação da API
+├── nginx/                              # Reverse proxy
+├── FAQs para iniciantes executarem/    # 📚 DOCUMENTAÇÃO COMPLETA
+│   ├── 00-INICIO-RAPIDO.md            # Guia de instalação
+│   ├── FAQ-PERGUNTAS-FREQUENTES.md    # 50+ perguntas
+│   ├── INDICE-DOCUMENTACAO.md         # Índice geral
+│   ├── FUNCIONALIDADES.md             # Todas as features
+│   ├── PORTAIS.md                     # Guia dos portais
+│   ├── api.md                         # Documentação da API
+│   ├── database.md                    # Schema do banco
+│   ├── arquitetura.md                 # Arquitetura técnica
+│   ├── backend.env.example            # Variáveis backend
+│   └── frontend.env.example           # Variáveis frontend
+├── docker-compose.yml                  # Orquestração completa
+└── README.md                          # Este arquivo
 ```
 
 ---
